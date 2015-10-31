@@ -1,0 +1,147 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: fHomeopathy Theme\n"
+"POT-Creation-Date: 2015-10-31 21:53+0200\n"
+"PO-Revision-Date: 2015-10-31 21:53+0200\n"
+"Last-Translator: \n"
+"Language-Team: Tishonator Team <info@tishonator.com>\n"
+"Language: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: ../"
+"fhomeopathy\n"
+
+#: ../search.php:19
+#, php-format
+msgid "You searched for \"%s\". Here are the results:"
+msgstr ""
+
+#: ../searchform.php:20
+msgid "Search..."
+msgstr ""
+
+#: ../single.php:33
+msgid "Pages:"
+msgstr ""
+
+#: ../footer.php:27
+msgid "fHomeopathy Theme"
+msgstr ""
+
+#: ../footer.php:28
+msgid "WordPress"
+msgstr ""
+
+#: ../comments.php:54
+#: ../template-parts/content-page.php:36
+#: ../template-parts/content.php:65
+msgid "Comments are closed."
+msgstr ""
+
+#: ../functions.php:71
+msgid "primary menu"
+msgstr ""
+
+#: ../functions.php:257
+msgid "Sidebar Widget Area"
+msgstr ""
+
+#: ../functions.php:259
+msgid "The sidebar widget area"
+msgstr ""
+
+#: ../functions.php:275
+#, php-format
+msgid ""
+"The fHomeopathy theme is a free version of the professional WordPress theme "
+"tHomeopathy. <a href=\"%s\" class=\"button-primary\" target=\"_blank\">Get "
+"tHomeopathy Theme</a><br />"
+msgstr ""
+
+#: ../functions.php:287
+msgid "Site Identity"
+msgstr ""
+
+#: ../functions.php:294
+msgid "Header Image"
+msgstr ""
+
+#: ../functions.php:302
+msgid "Colors"
+msgstr ""
+
+#: ../functions.php:310
+msgid "Background Image"
+msgstr ""
+
+#: ../functions.php:321
+msgid "Header and Footer"
+msgstr ""
+
+#: ../functions.php:335
+msgid "Top Background Image"
+msgstr ""
+
+#: ../functions.php:353
+msgid "Display Top Image in Full Screen Height"
+msgstr ""
+
+#: ../functions.php:372
+msgid "Copyright Text"
+msgstr ""
+
+#: ../template-parts/content-none.php:18
+msgid "Oh no! Article not found! 404 error!"
+msgstr ""
+
+#: ../template-parts/content-none.php:22
+msgid "No Results Found!"
+msgstr ""
+
+#: ../template-parts/content-none.php:27
+msgid ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
+"searching can help."
+msgstr ""
+
+#: ../template-parts/content-page.php:25
+#: ../template-parts/content.php:84
+msgid "Read More..."
+msgstr ""
+
+#: ../template-parts/content-page.php:36
+#: ../template-parts/content.php:65
+msgid "No Comments"
+msgstr ""
+
+#: ../template-parts/content-page.php:36
+#: ../template-parts/content.php:65
+msgid "1 Comment"
+msgstr ""
+
+#: ../template-parts/content-page.php:36
+#: ../template-parts/content.php:65
+msgid "% Comments"
+msgstr ""
+
+#: ../template-parts/content-page.php:41
+#: ../template-parts/content.php:70
+msgid "Edit"
+msgstr ""
+
+#: ../template-parts/content.php:101
+msgid "Read More"
+msgstr ""
+
+#: ../template-parts/content.php:113
+msgid "Categories:"
+msgstr ""
+
+#: ../template-parts/content.php:120
+msgid "Tags:"
+msgstr ""
