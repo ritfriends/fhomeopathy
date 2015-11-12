@@ -11,8 +11,8 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-
-	<?php echo '<h1 class="entry-title">'.get_the_title().'</h1>'; ?>
+	<div class="page-content">
+		<?php echo '<h1 class="entry-title">'.get_the_title().'</h1>'; ?>
 	
 	<div class="page-content">
 		<?php
