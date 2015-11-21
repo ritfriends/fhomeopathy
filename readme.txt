@@ -1,7 +1,7 @@
 == fHomeopathy WordPress Theme ==
 
 Contributors: tishonator
-Tags: green, white, light, two-columns, right-sidebar, fluid-layout, responsive-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, post-formats, sticky-post, threaded-comments, translation-ready
+Tags: green, white, light, two-columns, right-sidebar, fluid-layout, responsive-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, post-formats, sticky-post, threaded-comments, editor-style, translation-ready
 
 Requires at least: 4.1.0
 Tested up to: 4.2.1

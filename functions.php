@@ -280,8 +280,6 @@ function fhomeopathy_get_customizer_sectoin_info() {
  */
 function fhomeopathy_customize_register( $wp_customize ) {
 
-	return;
-
 	// Site Identity
 	$wp_customize->add_section( 'title_tagline', array(
 		'title' => __( 'Site Identity', 'fhomeopathy' ),
