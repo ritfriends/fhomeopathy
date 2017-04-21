@@ -7,7 +7,6 @@
  * It is used to display a page when nothing more specific matches a query.
  * e.g., it puts together the home page when no home.php file exists.
  *
- * @package WordPress
  * @subpackage fHomeopathy
  * @author tishonator
  * @since fHomeopathy 1.0.0
@@ -37,12 +36,12 @@
 					get_template_part( 'template-parts/content', get_post_format() );
 
 				endwhile;
-	?>
-				<div class="navigation">
-					<?php echo paginate_links( array( 'prev_next' => '', ) ); ?>
-				</div><!-- #navigation -->
 
-	<?php else :
+				the_posts_pagination( array(
+                        'prev_next' => '',
+                    ) );
+
+		  else :
 
 				// if no content is loaded, show the 'no found' template
 				get_template_part( 'template-parts/content', 'none' );

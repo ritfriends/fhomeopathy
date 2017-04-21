@@ -2,7 +2,6 @@
 /**
  * The template for displaying 404 pages (not found)
  *
- * @package WordPress
  * @subpackage fhomeopathy
  * @author tishonator
  * @since fHomeopathy 1.0.0
@@ -18,11 +17,11 @@
 
 	<div id="main-content">
 
-		<h1><?php _e( 'Oops! That page can&rsquo;t be found.', 'fhomeopathy' ); ?></h1>
+		<h1><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'fhomeopathy' ); ?></h1>
 
 		<div class="content">
 			<p>
-				<?php _e( 'It looks like nothing was found at this location. Maybe try a search?', 'fhomeopathy' ); ?>
+				<?php esc_html_e( 'It looks like nothing was found at this location. Maybe try a search?', 'fhomeopathy' ); ?>
 			</p>
 
 			<?php get_search_form(); ?>

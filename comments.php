@@ -5,7 +5,6 @@
  * The area of the page that contains both current comments
  * and the comment form.
  *
- * @package WordPress
  * @subpackage fHomeopathy
  * @author tishonator
  * @since fHomeopathy 1.0.0
@@ -20,12 +19,28 @@ if ( post_password_required() ) {
 	<?php if ( have_comments() ) : ?>
 		<h3 id="comments">
 			<?php
-				printf( _nx( 'One thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', get_comments_number(), 'comments title', 'fhomeopathy' ),
-					number_format_i18n( get_comments_number() ), get_the_title() );
+				$comments_number = get_comments_number();
+				if ( '1' === $comments_number ) {
+					/* translators: %s: post title */
+					printf( esc_html( 'One Reply to &ldquo;%s&rdquo;', 'comments title', 'fhomeopathy' ), get_the_title() );
+				} else {
+					printf(
+						/* translators: 1: number of comments, 2: post title */
+						esc_html(
+							'%1$s Reply to &ldquo;%2$s&rdquo;',
+							'%1$s Replies to &ldquo;%2$s&rdquo;',
+							$comments_number,
+							'comments title',
+							'fhomeopathy'
+						),
+						esc_html( number_format_i18n( $comments_number ) ),
+						get_the_title()
+					);
+				}
 			?>
 		</h3><!-- #comments -->
 
-		<ol class="comment-list">
+		<ol class="commentlist">
 			<?php
 				wp_list_comments( array(
 					'style'       => 'ol',
@@ -33,7 +48,7 @@ if ( post_password_required() ) {
 					'avatar_size' => 56,
 				) );
 			?>
-		</ol><!-- .comment-list -->
+		</ol><!-- .commentlist -->
 
 		<div class="comment-navigation">
 		   
@@ -51,7 +66,7 @@ if ( post_password_required() ) {
 		// If comments are closed and there are comments, let's leave a little note, shall we?
 		if ( ! comments_open() && get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) :
 	?>
-		<p class="no-comments"><?php _e( 'Comments are closed.', 'fhomeopathy' ); ?></p>
+		<p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'fhomeopathy' ); ?></p>
 	<?php endif; ?>
 
 	<?php comment_form(); ?>

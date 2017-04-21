@@ -2,7 +2,6 @@
 /**
  * The template part for displaying a message that posts cannot be found
  *
- * @package WordPress
  * @subpackage fHomeopathy
  * @author tishonator
  * @since fHomeopathy 1.0.0
@@ -15,16 +14,16 @@
 
 	<?php if ( is_home() && current_user_can( 'publish_posts' ) ) : ?>
 
-			<h1><?php _e( 'Oh no! Article not found! 404 error!', 'fhomeopathy' ); ?></h1>
+			<h1><?php esc_html_e( 'Oh no! Article not found! 404 error!', 'fhomeopathy' ); ?></h1>
 	
 	<?php elseif ( is_search() ) : ?>
 
-			<h1><?php _e( 'No Results Found!', 'fhomeopathy' ); ?></h1>
+			<h1><?php esc_html_e( 'No Results Found!', 'fhomeopathy' ); ?></h1>
 			<?php get_search_form(); ?>
 
 	<?php else : ?>
 
-			<p><?php _e( 'It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help.', 'fhomeopathy' ); ?></p>
+			<p><?php esc_html_e( 'It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help.', 'fhomeopathy' ); ?></p>
 			<?php get_search_form(); ?>
 
 	<?php endif; ?>

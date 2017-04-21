@@ -2,7 +2,6 @@
 /**
  * The template used for displaying page content
  *
- * @package WordPress
  * @subpackage fHomeopathy
  * @author tishonator
  * @since fHomeopathy 1.0.0
@@ -12,7 +11,11 @@
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<div class="page-content">
-		<?php echo '<h1 class="entry-title">'.get_the_title().'</h1>'; ?>
+		<h1 class="entry-title"><?php the_title(); ?></h1>
+
+	<div class="before-content">
+		<?php edit_post_link( __( 'Edit', 'fhomeopathy' ), '<span class="edit-icon">', '</span>' ); ?>
+	</div>
 	
 	<div class="page-content">
 		<?php
@@ -38,7 +41,6 @@
 
 			<?php endif; ?>
 
-			<?php edit_post_link( __( 'Edit', 'fhomeopathy' ), '<span class="edit-icon">', '</span>' ); ?>
 		<?php endif; ?>
 
 	</div><!-- .page-after-content -->

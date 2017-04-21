@@ -2,7 +2,6 @@
 /**
  * The template for displaying search results pages.
  *
- * @package WordPress
  * @subpackage fHomeopathy
  * @author tishonator
  * @since fHomeopathy 1.0.0
@@ -16,7 +15,9 @@
 	<div id="main-content">
 
 		<div id="infoTxt">
-			<?php printf( __( 'You searched for "%s". Here are the results:', 'fhomeopathy' ),
+			<?php
+				/* translators: %s: search query */
+				printf( esc_html__( 'You searched for "%s". Here are the results:', 'fhomeopathy' ),
 						get_search_query() );
 			?>
 		</div><!-- #infoTxt -->
@@ -34,12 +35,12 @@
 					get_template_part( 'template-parts/content', get_post_format() );
 
 				endwhile;
-	?>
-				<div class="navigation">
-					<?php echo paginate_links( array( 'prev_next' => '', ) ); ?>
-				</div><!-- .navigation -->
+	
+				the_posts_pagination( array(
+		                        'prev_next' => '',
+		                    ) );
 
-	<?php else :
+		else :
 
 				// if no content is loaded, show the 'no found' template
 				get_template_part( 'template-parts/content', 'none' );

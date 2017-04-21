@@ -1,3 +1,40 @@
+fHomeopathy 1.0.9, 2017-04-21
+------------------------
+- add full-width page template
+- bug fixes
+
+fHomeopathy 1.0.8, 2016-11-20
+------------------------
+- add custom logo
+- add footer columns
+- update tags in style.css
+- bug fixes
+
+fHomeopathy 1.0.7, 2016-06-15
+------------------------
+- add header slider
+- add header effect while scrolling
+- bug fixes
+
+fHomeopathy 1.0.6, 2016-04-02
+------------------------
+- bug fixes
+
+fHomeopathy 1.0.5, 2016-02-29
+------------------------
+- remove custom post-formats support declaration
+- remove HTML5 search form declaration
+- remove @package WordPress declaration
+
+fHomeopathy 1.0.4, 2016-02-02
+------------------------
+- bug fixes
+
+fHomeopathy 1.0.3, 2015-12-11
+------------------------
+- FontAwesome update
+- bug fixes
+
 fHomeopathy 1.0.2, 2015-11-21
 ------------------------
 - bug fixing

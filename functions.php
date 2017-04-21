@@ -20,12 +20,13 @@
  * For more information on hooks, actions, and filters,
  * {@link https://codex.wordpress.org/Plugin_API}
  *
- * @package WordPress
  * @subpackage fHomeopathy
  * @author tishonator
  * @since fHomeopathy 1.0.0
  *
  */
+
+require_once( trailingslashit( get_template_directory() ) . 'customize-pro/class-customize.php' );
 
 if ( ! function_exists( 'fhomeopathy_setup' ) ) :
 /**
@@ -64,11 +65,11 @@ function fhomeopathy_setup() {
 	 * @link http://codex.wordpress.org/Function_Reference/add_theme_support#Post_Thumbnails
 	 */
 	add_theme_support( 'post-thumbnails' );
-	set_post_thumbnail_size( 'full', 'full', true );
+	set_post_thumbnail_size( 1200, 0, true );
 
 	// This theme uses wp_nav_menu() in header menu
 	register_nav_menus( array(
-		'primary'   => __( 'primary menu', 'fhomeopathy' ),
+		'primary'   => __( 'Primary Menu', 'fhomeopathy' ),
 	) );
 
 	/*
@@ -76,53 +77,42 @@ function fhomeopathy_setup() {
 	 * to output valid HTML5.
 	 */
 	add_theme_support( 'html5', array(
-		'search-form',
 		'comment-form',
 		'comment-list',
 		'gallery',
 		'caption',
 	) );
 
-	/*
-	 * Enable support for Post Formats.
-	 * See: https://codex.wordpress.org/Post_Formats
-	 */
-	add_theme_support( 'post-formats', array(
-		'aside',
-		'image',
-		'video',
-		'quote',
-		'link',
-		'gallery',
-		'status',
-		'audio',
-		'chat',
-	) );
-
 	// add the visual editor to resemble the theme style
-	add_editor_style( array( 'css/editor-style.css' ) );
+	add_editor_style( array( 'css/editor-style.css', get_template_directory_uri() . '/css/font-awesome.min.css' ) );
 
 	// add content width
+	global $content_width;
 	if ( ! isset( $content_width ) ) {
 
 		$content_width = 900;
 	}
 
 	// add custom header
-	add_theme_support( 'custom-header', array (
-					   'default-image'          => '',
-					   'random-default'         => '',
-					   'width'                  => 190,
-					   'height'                 => 36,
-					   'flex-height'            => true,
-					   'flex-width'             => true,
-					   'default-text-color'     => '',
-					   'header-text'            => '',
-					   'uploads'                => true,
-					   'wp-head-callback'       => '',
-					   'admin-head-callback'    => '',
-					   'admin-preview-callback' => '',
-					) );
+    add_theme_support( 'custom-header', array (
+                       'default-image'          => '',
+                       'random-default'         => '',
+                       'flex-height'            => true,
+                       'flex-width'             => true,
+                       'uploads'                => true,
+                       'width'                  => 900,
+                       'height'                 => 100,
+                       'default-text-color'     => '#000000',
+                       'wp-head-callback'       => 'fhomeopathy_header_style',
+                    ) );
+
+    // add custom logo
+    add_theme_support( 'custom-logo', array (
+                       'width'                  => 145,
+                       'height'                 => 36,
+                       'flex-height'            => true,
+                       'flex-width'             => true,
+                    ) );
 }
 endif; // fhomeopathy_setup
 
@@ -136,7 +126,8 @@ add_action( 'after_setup_theme', 'fhomeopathy_setup' );
 function fhomeopathy_load_scripts() {
 
 	// load main stylesheet.
-	wp_enqueue_style( 'fhomeopathy-style', get_stylesheet_uri(), array( ) );
+	wp_enqueue_style( 'font-awesome', get_template_directory_uri() . '/css/font-awesome.min.css', array( ) );
+	wp_enqueue_style( 'fhomeopathy-style', get_stylesheet_uri(), array() );
 	
 	wp_enqueue_style( 'fhomeopathy-fonts', fhomeopathy_fonts_url(), array(), null );
 	
@@ -150,28 +141,44 @@ function fhomeopathy_load_scripts() {
 
 add_action( 'wp_enqueue_scripts', 'fhomeopathy_load_scripts' );
 
-/* 
- * Display the inline css style for the header tag
- */
-function fhomeopathy_header_css_style() {
+function fhomeopathy_should_display_slider() {
 
-	$backgroundImageUrl = get_theme_mod('fhomeopathy_header_topbackground',
-							get_stylesheet_directory_uri() . '/images/topbackground.jpg');
+	return is_front_page() && (fhomeopathy_get_slides_count() > 0);
+}
 
-	if ( empty($backgroundImageUrl) ) {
-		return;
+function fhomeopathy_slides_json() {
+
+	$result = array();
+	for ( $i = 1; $i <= 3; ++$i ) {
+
+		$defaultSlideImage = get_template_directory_uri().'/images/slider/' . $i .'.jpg';
+		$slideImage = get_theme_mod( 'fhomeopathy_slide'.$i.'_image', $defaultSlideImage );
+
+		if ( $slideImage != '' ) {
+
+			$slide = array( 'slideImage' => $slideImage, );
+
+			array_push($result, $slide);
+		}
 	}
 
-	$css = 'background-image: url(' . "'" . $backgroundImageUrl . "'" . ');';
+	return json_encode($result);
+}
 
-	$css .= 'background-repeat: no-repeat;';
+function fhomeopathy_get_slides_count() {
 
-	if ( get_theme_mod('fhomeopathy_header_topbackgroundfullscreen', 1) == 1 ) {
+	$result = 0;
+	for ( $i = 1; $i <= 3; ++$i ) {
 
-		$css .= 'height:100vh;';
+		$defaultSlideImage = get_template_directory_uri().'/images/slider/' . $i .'.jpg';
+		$slideImage = get_theme_mod( 'fhomeopathy_slide'.$i.'_image', $defaultSlideImage );
+		if ( $slideImage != '' ) {
+
+			++$result;
+		}
 	}
 
-	echo 'style="' . $css .'"';
+	return $result;
 }
 
 /**
@@ -206,32 +213,24 @@ function fhomeopathy_fonts_url() {
 /**
  * Display website's logo image
  */
-function fhomeopathy_show_website_logo_image_or_title() {
+function fhomeopathy_show_website_logo_image_and_title() {
 
-	if ( get_header_image() != '' ) {
-	
-		// Check if the user selected a header Image in the Customizer or the Header Menu
-		$logoImgPath = get_header_image();
-		$siteTitle = get_bloginfo( 'name' );
-		$imageWidth = get_custom_header()->width;
-		$imageHeight = get_custom_header()->height;
-		
-		echo '<a href="' . esc_url( home_url('/') ) . '" title="' . esc_attr( get_bloginfo('name') ) . '">';
-		
-		echo '<img src="' . esc_attr( $logoImgPath ) . '" alt="' . esc_attr( $siteTitle ) . '" title="' . esc_attr( $siteTitle ) . '" width="' . esc_attr( $imageWidth ) . '" height="' . esc_attr( $imageHeight ) . '" />';
-		
-		echo '</a>';
+	if ( has_custom_logo() ) {
 
-	} else {
-	
-		echo '<a href="' . esc_url( home_url('/') ) . '" title="' . esc_attr( get_bloginfo('name') ) . '">';
-		
-		echo '<h1>'.get_bloginfo('name').'</h1>';
-		
-		echo '</a>';
-		
-		echo '<strong>'.get_bloginfo('description').'</strong>';
-	}
+        the_custom_logo();
+    }
+
+    $header_text_color = get_header_textcolor();
+
+    if ( 'blank' !== $header_text_color ) {
+    
+        echo '<div id="site-identity">';
+        echo '<a href="' . esc_url( home_url('/') ) . '" title="' . esc_attr( get_bloginfo('name') ) . '">';
+        echo '<h1 class="entry-title">' . esc_html( get_bloginfo('name') ) . '</h1>';
+        echo '</a>';
+        echo '<strong>' . esc_html( get_bloginfo('description') ) . '</strong>';
+        echo '</div>';
+    }
 }
 
 /**
@@ -262,98 +261,118 @@ function fhomeopathy_widgets_init() {
 						'before_title'	 =>  '<div class="sidebar-before-title"></div><h3 class="sidebar-title">',
 						'after_title'	 =>  '</h3><div class="sidebar-after-title"></div>',
 					) );
+
+	// Register Footer Column #1
+	register_sidebar( array (
+							'name'			 =>  __( 'Footer Column #1', 'fhomeopathy' ),
+							'id' 			 =>  'footer-column-1-widget-area',
+							'description'	 =>  __( 'The Footer Column #1 widget area', 'fhomeopathy' ),
+							'before_widget'  =>  '',
+							'after_widget'	 =>  '',
+							'before_title'	 =>  '<h2 class="footer-title">',
+							'after_title'	 =>  '</h2><div class="footer-after-title"></div>',
+						) );
+	
+	// Register Footer Column #2
+	register_sidebar( array (
+							'name'			 =>  __( 'Footer Column #2', 'fhomeopathy' ),
+							'id' 			 =>  'footer-column-2-widget-area',
+							'description'	 =>  __( 'The Footer Column #2 widget area', 'fhomeopathy' ),
+							'before_widget'  =>  '',
+							'after_widget'	 =>  '',
+							'before_title'	 =>  '<h2 class="footer-title">',
+							'after_title'	 =>  '</h2><div class="footer-after-title"></div>',
+						) );
+	
+	// Register Footer Column #3
+	register_sidebar( array (
+							'name'			 =>  __( 'Footer Column #3', 'fhomeopathy' ),
+							'id' 			 =>  'footer-column-3-widget-area',
+							'description'	 =>  __( 'The Footer Column #3 widget area', 'fhomeopathy' ),
+							'before_widget'  =>  '',
+							'after_widget'	 =>  '',
+							'before_title'	 =>  '<h2 class="footer-title">',
+							'after_title'	 =>  '</h2><div class="footer-after-title"></div>',
+						) );
 }
 add_action( 'widgets_init', 'fhomeopathy_widgets_init' );
-
-/**
- * Gets additional theme settings description
- */
-function fhomeopathy_get_customizer_sectoin_info() {
-
-	$premiumThemeUrl = 'https://tishonator.com/product/thomeopathy';
-
-	return sprintf( __( 'The fHomeopathy theme is a free version of the professional WordPress theme tHomeopathy. <a href="%s" class="button-primary" target="_blank">Get tHomeopathy Theme</a><br />', 'fhomeopathy' ), $premiumThemeUrl );
-}
 
 /**
  * Register theme settings in the customizer
  */
 function fhomeopathy_customize_register( $wp_customize ) {
 
-	// Site Identity
-	$wp_customize->add_section( 'title_tagline', array(
-		'title' => __( 'Site Identity', 'fhomeopathy' ),
-		'description' => fhomeopathy_get_customizer_sectoin_info(),
-		'priority' => 30,
-	) );
-
-	// Header Image Section
-	$wp_customize->add_section( 'header_image', array(
-		'title' => __( 'Header Image', 'fhomeopathy' ),
-		'description' => fhomeopathy_get_customizer_sectoin_info(),
-		'theme_supports' => 'custom-header',
-		'priority' => 60,
-	) );
-
-	// Colors Section
-	$wp_customize->add_section( 'colors', array(
-		'title' => __( 'Colors', 'fhomeopathy' ),
-		'description' => fhomeopathy_get_customizer_sectoin_info(),
-		'priority' => 50,
-	) );
-
-
-	// Background Image Section
-	$wp_customize->add_section( 'background_image', array(
-			'title' => __( 'Background Image', 'fhomeopathy' ),
-			'description' => fhomeopathy_get_customizer_sectoin_info(),
-			'priority' => 70,
-		) );
-
 	/**
-	 * Add Header and Footer Section
+	 * Add Slider Section
 	 */
 	$wp_customize->add_section(
-		'fhomeopathy_header_and_footer_settings',
+		'fhomeopathy_slider_section',
 		array(
-			'title'       => __( 'Header and Footer', 'fhomeopathy' ),
+			'title'       => __( 'Header Slider', 'fhomeopathy' ),
 			'capability'  => 'edit_theme_options',
-			'description' => fhomeopathy_get_customizer_sectoin_info(),
+		)
+	);
+	
+	// Add slide 1 background image
+	$wp_customize->add_setting( 'fhomeopathy_slide1_image',
+		array(
+			'default' => get_template_directory_uri().'/images/slider/' . '1.jpg',
+    		'sanitize_callback' => 'esc_url_raw'
 		)
 	);
 
-	// Add top background image
-	$wp_customize->add_setting( 'fhomeopathy_header_topbackground', array(
-					'sanitize_callback' => 'esc_url_raw',
-					'default' 			=> get_stylesheet_directory_uri().'/images/topbackground.jpg',
-				) );
-
-	$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'fhomeopathy_header_topbackground',
+    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'fhomeopathy_slide1_image',
 			array(
-				'label'   	 => __( 'Top Background Image', 'fhomeopathy' ),
-				'section' 	 => 'fhomeopathy_header_and_footer_settings',
-				'settings'   => 'fhomeopathy_header_topbackground',
+				'label'   	 => __( 'Slide 1 Image', 'fhomeopathy' ),
+				'section' 	 => 'fhomeopathy_slider_section',
+				'settings'   => 'fhomeopathy_slide1_image',
+			) 
+		)
+	);
+	
+	// Add slide 2 background image
+	$wp_customize->add_setting( 'fhomeopathy_slide2_image',
+		array(
+			'default' => get_template_directory_uri().'/images/slider/' . '2.jpg',
+    		'sanitize_callback' => 'esc_url_raw'
+		)
+	);
+
+    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'fhomeopathy_slide2_image',
+			array(
+				'label'   	 => __( 'Slide 2 Image', 'fhomeopathy' ),
+				'section' 	 => 'fhomeopathy_slider_section',
+				'settings'   => 'fhomeopathy_slide2_image',
+			) 
+		)
+	);
+	
+	// Add slide 3 background image
+	$wp_customize->add_setting( 'fhomeopathy_slide3_image',
+		array(
+			'default' => get_template_directory_uri().'/images/slider/' . '3.jpg',
+    		'sanitize_callback' => 'esc_url_raw'
+		)
+	);
+
+    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'fhomeopathy_slide3_image',
+			array(
+				'label'   	 => __( 'Slide 3 Image', 'fhomeopathy' ),
+				'section' 	 => 'fhomeopathy_slider_section',
+				'settings'   => 'fhomeopathy_slide3_image',
 			) 
 		)
 	);
 
-	// Display top image full screen
-	$wp_customize->add_setting(
-		'fhomeopathy_header_topbackgroundfullscreen',
+	/**
+	 * Add Footer Section
+	 */
+	$wp_customize->add_section(
+		'fhomeopathy_header_and_footer_settings',
 		array(
-		    'default'           => 1,
-		    'sanitize_callback' => 'esc_attr',
+			'title'       => __( 'Footer', 'fhomeopathy' ),
+			'capability'  => 'edit_theme_options',
 		)
-	);
-
-	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'fhomeopathy_header_topbackgroundfullscreen',
-        array(
-            'label'          => __( 'Display Top Image in Full Screen Height', 'fhomeopathy' ),
-            'section'        => 'fhomeopathy_header_and_footer_settings',
-            'settings'       => 'fhomeopathy_header_topbackgroundfullscreen',
-            'type'           => 'checkbox',
-            )
-        )
 	);
 
 	// Add footer copyright text
@@ -376,5 +395,35 @@ function fhomeopathy_customize_register( $wp_customize ) {
 	);
 }
 add_action('customize_register', 'fhomeopathy_customize_register');
+
+function fhomeopathy_header_style() {
+
+    $header_text_color = get_header_textcolor();
+
+    if ( ! has_header_image()
+        && ( get_theme_support( 'custom-header', 'default-text-color' ) === $header_text_color
+             || 'blank' === $header_text_color ) ) {
+
+        return;
+    }
+
+    $headerImage = get_header_image();
+?>
+    <style type="text/css">
+        <?php if ( has_header_image() ) : ?>
+
+                #header-main-fixed {background-image: url("<?php echo esc_url( $headerImage ); ?>");}
+
+        <?php endif; ?>
+
+        <?php if ( get_theme_support( 'custom-header', 'default-text-color' ) !== $header_text_color
+                    && 'blank' !== $header_text_color ) : ?>
+
+                #header-main-fixed, #header-main-fixed h1.entry-title {color: #<?php echo esc_attr( $header_text_color ); ?>;}
+
+        <?php endif; ?>
+    </style>
+<?php
+}
 
 ?>

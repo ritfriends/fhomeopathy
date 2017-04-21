@@ -2,7 +2,6 @@
 /**
  * The sidebar containing the main widget area
  *
- * @package WordPress
  * @subpackage fHomeopathy
  * @author tishonator
  * @since fHomeopathy 1.0.0

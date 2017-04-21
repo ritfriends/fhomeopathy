@@ -25,21 +25,6 @@ jQuery( document ).ready(function() {
 		}
 	});
 
-	jQuery("#navmain > div > ul li").mouseleave( function() {
-		if (fhomeopathy_IsLargeResolution()) {
-			jQuery(this).children("ul").stop(true, true).css('display', 'block').slideUp(300);
-		}
-	});
-	
-	jQuery("#navmain > div > ul li").mouseenter( function() {
-		if (fhomeopathy_IsLargeResolution()) {
-
-			var curMenuLi = jQuery(this);
-			jQuery("#navmain > div > ul > ul:not(:contains('#" + curMenuLi.attr('id') + "')) ul").hide();
-		
-			jQuery(this).children("ul").stop(true, true).css('display','none').slideDown(400);
-		}
-	});
 });
 
 function fhomeopathy_IsSmallResolution() {
@@ -75,5 +60,131 @@ jQuery(document).ready(function () {
 	  }, 600);
 	  return false;
   });
+
+});
+
+jQuery(window).scroll(function() {
+	if (jQuery(this).scrollTop() > 1){  
+		jQuery('#header-main-fixed-container').addClass("header-sticky");
+	}
+	else{
+		jQuery('#header-main-fixed-container').removeClass("header-sticky");
+	}
+});
+
+function fhomeopathy_setCurrentSlide(slideIndex) {
+
+    var headerMain = jQuery('#header-main-fixed');
+    var sliderImageContainer = jQuery('#slider-image-container');
+
+    var slides = headerMain.data('slides');
+
+    if (!slides || slideIndex >= jQuery(slides).length) {
+
+        return;
+    }
+
+    var slide = slides[slideIndex];
+    var slideImage = 'url("' + slide['slideImage'] + '")';
+
+    if ( slideImage != sliderImageContainer.css('background-image') ) {
+
+        headerMain.css("background-color", '#555555');
+        sliderImageContainer.animate({opacity: 0.6}, 400, function() {
+                        jQuery(this)
+                            .css("background-image", slideImage)
+                            .animate({opacity: 1}, 400);
+                    });
+    }
+
+    jQuery(".slider-dots > span").removeClass("slider-current-dot");
+
+    jQuery(".slider-dots > span:nth-child(" + (slideIndex + 1) + ")").addClass("slider-current-dot");
+
+    headerMain.data('currentslide', slideIndex);
+}
+
+jQuery( document ).ready(function() {
+
+    fhomeopathy_setCurrentSlide(0);
+
+    window.sliderPrevNextClicked = false;
+
+    jQuery('.slider-prev').click(function() {
+
+        var currentIndex = jQuery('#header-main-fixed').data('currentslide');
+
+        window.sliderPrevNextClicked = true;
+
+        if (currentIndex > 0) {
+
+            --currentIndex;
+            fhomeopathy_setCurrentSlide(currentIndex);
+
+        } else {
+
+            currentIndex = jQuery('#header-main-fixed').data('slides').length - 1;
+
+            fhomeopathy_setCurrentSlide(currentIndex);          
+        }
+    });
+
+    jQuery('.slider-next').click(function() {
+
+        window.sliderPrevNextClicked = true;
+      
+        var currentIndex = jQuery('#header-main-fixed').data('currentslide');
+
+        if (currentIndex < jQuery('#header-main-fixed').data('slides').length - 1) {
+
+            ++currentIndex;
+            fhomeopathy_setCurrentSlide(currentIndex);
+
+        } else {
+
+            fhomeopathy_setCurrentSlide(0);          
+        }
+    });
+
+    jQuery('.slider-dots > span').click(function() {
+
+        window.sliderPrevNextClicked = true;
+
+        var slideNum = jQuery(this).data('slidenum');
+
+        fhomeopathy_setCurrentSlide(slideNum);
+    });
+
+    window.setInterval(function(){
+
+      if (window.sliderPrevNextClicked) {
+
+        window.sliderPrevNextClicked = false;
+        return;
+      }
+	
+		  if ( !jQuery(window).scrollTop() ) {
+
+			  jQuery('.slider-next').click();
+		  
+	      }
+    }, 5000);
+
+    jQuery(document).keydown(function(e) {
+        switch(e.which) {
+            case 37: // left
+            window.sliderPrevNextClicked = true;
+            jQuery('.slider-prev').click();
+            break;
+
+            case 39: // right
+            window.sliderPrevNextClicked = true;
+            jQuery('.slider-next').click();
+            break;
+
+            default: return;
+        }
+        e.preventDefault();
+    });
 
 });
