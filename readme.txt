@@ -59,13 +59,13 @@ The exceptions to this license are as follows:
 *
 * Yanone Kaffeesatz Font (default theme font), Reference: https://www.google.com/fonts/specimen/Yanone+Kaffeesatz, Released under Apache License, version 2.0 license - http://www.apache.org/licenses/LICENSE-2.0.html
 *
-* images/slider/1.jpg CC0 Public Domain Reference: http://pixabay.com/go/?t=%2Fservice%2Fterms%2F%23download_terms, Image Source: https://pixabay.com/en/lavender-hummel-insect-violet-1211358/
+* images/slider/1.jpg CC0 Public Domain Reference: http://pixabay.com/go/?t=%2Fservice%2Fterms%2F%23download_terms, Image Source: https://pixabay.com/en/apple-diet-face-food-fresh-fruit-19309/
 *
-* images/slider/1.jpg CC0 Public Domain Reference: http://pixabay.com/go/?t=%2Fservice%2Fterms%2F%23download_terms, Image Source: https://pixabay.com/en/marigold-calendula-rainstorm-1348649/
+* images/slider/2.jpg CC0 Public Domain Reference: http://pixabay.com/go/?t=%2Fservice%2Fterms%2F%23download_terms, Image Source: https://pixabay.com/en/marigold-calendula-rainstorm-1348649/
 *
 * images/slider/1.jpg CC0 Public Domain Reference: http://pixabay.com/go/?t=%2Fservice%2Fterms%2F%23download_terms, Image Source: https://pixabay.com/en/homeopathy-beads-globuli-medical-962079/
 * 
-* screenshot.png (slider image) CC0 Public Domain Reference: http://pixabay.com/go/?t=%2Fservice%2Fterms%2F%23download_terms, Image Source: https://pixabay.com/en/lavender-hummel-insect-violet-1211358/
+* screenshot.png (slider image) CC0 Public Domain Reference: http://pixabay.com/go/?t=%2Fservice%2Fterms%2F%23download_terms, Image Source: https://pixabay.com/en/apple-diet-face-food-fresh-fruit-19309/
 
 
 == Contacts ==

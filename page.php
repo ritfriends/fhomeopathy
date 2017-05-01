@@ -14,6 +14,9 @@
 
  get_header(); ?>
 
+<div class="clear">
+</div><!-- .clear -->
+
 <div id="main-content-wrapper">
 
 	<div id="main-content">

@@ -22,11 +22,11 @@ if ( post_password_required() ) {
 				$comments_number = get_comments_number();
 				if ( '1' === $comments_number ) {
 					/* translators: %s: post title */
-					printf( esc_html( 'One Reply to &ldquo;%s&rdquo;', 'comments title', 'fhomeopathy' ), get_the_title() );
+					printf( _x( 'One Reply to &ldquo;%s&rdquo;', 'comments title', 'fhomeopathy' ), get_the_title() );
 				} else {
 					printf(
 						/* translators: 1: number of comments, 2: post title */
-						esc_html(
+						_nx(
 							'%1$s Reply to &ldquo;%2$s&rdquo;',
 							'%1$s Replies to &ldquo;%2$s&rdquo;',
 							$comments_number,

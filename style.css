@@ -4,7 +4,7 @@ Description: fHomeopathy is a Fully Responsive WordPress Theme suitable for an A
 Theme URI: https://tishonator.com/product/fhomeopathy
 Author: tishonator
 Author URI: https://tishonator.com
-Version: 1.0.9
+Version: 1.1.0
 Text Domain: fhomeopathy
 Tags: blog, education, food-and-drink, two-columns, right-sidebar, custom-logo, custom-background, custom-colors, custom-header, custom-menu, post-formats, threaded-comments, editor-style, translation-ready, sticky-post, theme-options, footer-widgets, full-width-template, front-page-post-form
 License: GNU General Public License v2.0
@@ -1417,18 +1417,24 @@ blockquote {
 	width:100%;
 }
 
-#not-found-title {
-	font-size:48px;
-	padding-left:0 !important;
-	text-align:center !important;
-	margin-bottom:10px;
+.footer-title {
+	padding:0 5px 1px 1px;
+	margin-bottom:-2px;
+	font-size:20px;
+	font-style: italic;
+	font-weight: bold;
+	border-bottom:4px solid #a1c62f;
+	color:#eeeeee;
+	letter-spacing:1px;
+	float:left;
 }
 
-#not-found-image {
-	-webkit-border-radius:500px;
-	-moz-border-radius:500px;
-	border-radius:500px;
-	margin-bottom:10px;
+.footer-after-title {
+	clear:both;
+	height:1px;
+	background:#cccccc;
+	margin-bottom:5px;
+	width:100%;
 }
 
 #header-main-fixed a.wc-forward {
@@ -1445,10 +1451,6 @@ blockquote {
 #content .page-title {
 	display:none !important;
 }
-
-
-
-
 
 .gallery {
 	margin: 0 -1.1666667% 1.75em;
@@ -1560,10 +1562,6 @@ blockquote {
 	#navmain ul  li {
 		position:relative;
 		float:left;
-	}
-
-	#navmain > div > ul > li > a, .cart-contents-icon, .search-form-icon {
-		font-size: 18px;
 	}
 	
 	#navmain > div > ul > li {
